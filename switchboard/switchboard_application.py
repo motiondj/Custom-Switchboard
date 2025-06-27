@@ -427,7 +427,7 @@ hosts allow = {allowed_addrs}
         if sys.platform.startswith('win'):
             rsync_path = os.path.normpath(os.path.join(
                 CONFIG.ENGINE_DIR.get_value(), 'Extras', 'ThirdPartyNotUE',
-                'SwitchboardThirdParty', 'cwrsync', 'bin', 'rsync.exe'))
+                'cwrsync', 'bin', 'rsync.exe'))
         else:
             rsync_path = 'rsync'
 

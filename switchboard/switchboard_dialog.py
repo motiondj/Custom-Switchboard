@@ -545,10 +545,26 @@ class SwitchboardDialog(QtCore.QObject):
         """Config 브라우저를 설정합니다"""
         # Config 브라우저 위젯 생성
         self.config_browser = ConfigBrowserWidget(self.window)
-        
-        # Config 브라우저를 탭에 추가
-        self.window.tabs_main.addTab(self.config_browser, "Playlist")
-        
+
+        # Playlist 프레임 생성
+        playlist_frame = QtWidgets.QFrame()
+        playlist_frame.setMaximumWidth(300)
+        playlist_frame.setMinimumWidth(200)
+        playlist_frame.setFrameStyle(QtWidgets.QFrame.Box)
+        playlist_layout = QtWidgets.QVBoxLayout(playlist_frame)
+        playlist_title = QtWidgets.QLabel("Playlist")
+        playlist_title.setStyleSheet("font-weight: bold; font-size: 14px; padding: 5px; background-color: #2b2b2b; color: white;")
+        playlist_layout.addWidget(playlist_title)
+        playlist_layout.addWidget(self.config_browser)
+
+        # splitter 생성
+        splitter = QtWidgets.QSplitter(QtCore.Qt.Horizontal)
+        splitter.addWidget(playlist_frame)
+        splitter.addWidget(self.window.centralwidget)
+
+        # splitter를 QMainWindow의 centralWidget으로 교체
+        self.window.setCentralWidget(splitter)
+
         # Config 선택 시그널 연결
         self.config_browser.signal_config_selected.connect(self.set_current_config)
         self.config_browser.signal_config_activate_requested.connect(self.activate_config)

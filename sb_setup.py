@@ -25,17 +25,17 @@ def find_engine_ancestor_dir(start: pathlib.Path) -> pathlib.Path:
     ''' Searches parent directories recursively for SB prerequisites. '''
     search = start
     while search != search.parent:
-        sb_thirdparty_subdir = (
-            search / 'Extras/ThirdPartyNotUE/SwitchboardThirdParty')
+        cwrsync_dir = (
+            search / 'Extras/ThirdPartyNotUE/cwrsync')
 
-        if sb_thirdparty_subdir.is_dir():
+        if cwrsync_dir.is_dir():
             return search
         else:
             search = search.parent
 
     # If not found in ancestor directories, try to find UE_5.5 in Program Files
     ue_path = pathlib.Path("C:/Program Files/Epic Games/UE_5.5")
-    if (ue_path / 'Extras/ThirdPartyNotUE/SwitchboardThirdParty').is_dir():
+    if (ue_path / 'Extras/ThirdPartyNotUE/cwrsync').is_dir():
         return ue_path
 
     raise RuntimeError("Couldn't find prerequisites in ancestor directories or UE_5.5")
@@ -44,7 +44,7 @@ def find_engine_ancestor_dir(start: pathlib.Path) -> pathlib.Path:
 SWITCHBOARD_PATH = pathlib.Path(__file__).parent
 ENGINE_PATH = find_engine_ancestor_dir(SWITCHBOARD_PATH)
 THIRDPARTY_PATH = ENGINE_PATH / 'Extras/ThirdPartyNotUE'
-SB_THIRDPARTY_PATH = THIRDPARTY_PATH / 'SwitchboardThirdParty'
+SB_THIRDPARTY_PATH = THIRDPARTY_PATH
 
 CWRSYNC_SRC_DIR = THIRDPARTY_PATH / 'cwrsync'
 CWRSYNC_DEST_DIR = SB_THIRDPARTY_PATH / 'cwrsync'
